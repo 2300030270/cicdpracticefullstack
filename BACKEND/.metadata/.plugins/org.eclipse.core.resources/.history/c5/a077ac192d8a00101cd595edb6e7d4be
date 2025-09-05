@@ -1,0 +1,31 @@
+package com.myproject.cicd.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.myproject.cicd.model.Ac;
+import com.myproject.cicd.service.AcService;
+
+@RestController
+@CrossOrigin(origins = "http://localhost:5173") // Vite frontend
+public class AcController {
+
+   @Autowired
+   private AcService service;
+   
+   @GetMapping("/viewall")
+   public List<Ac> viewallacs() {
+	   return service.viewallacs();
+   }
+   
+   @PostMapping("/add")
+   public String addac(@RequestBody Ac a) {
+	   return service.addac(a);
+   }
+   
+   @DeleteMapping("/delete/{id}")
+   public String deleteac(@PathVariable int id) {
+	   return service.deleteac(id);
+   }
+}

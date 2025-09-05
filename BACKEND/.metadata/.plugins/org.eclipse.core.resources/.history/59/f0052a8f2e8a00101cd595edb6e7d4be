@@ -1,0 +1,46 @@
+package com.myproject.cicd.model;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name= "ac_table")
+public class Ac 
+{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto-generate ID
+    @Column(name="aid")
+    private int id;
+
+    @Column(name = "ac_brand", length = 50, nullable = false)
+    private String brand;
+      
+    @Column(name = "ac_serial_no", length = 50, nullable = false, unique = true)
+    private String serialNumber;
+      
+    @Column(name = "ac_price", nullable = false)
+    private double price;
+      
+    @Column(name = "ac_color", length = 20, nullable = true)
+    private String color;
+
+    // Getters and Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
+
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+
+    @Override
+    public String toString() {
+        return "Ac [id=" + id + ", brand=" + brand + ", serialNumber=" + serialNumber + ", price=" + price + ", color=" + color + "]";
+    }
+}
