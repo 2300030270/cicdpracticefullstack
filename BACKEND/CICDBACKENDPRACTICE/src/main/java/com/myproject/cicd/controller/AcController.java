@@ -20,6 +20,11 @@ public class AcController {
    @Autowired
    private AcService service;
    
+   @GetMapping("/")
+	public String home()
+	{
+		return "CI/CD FULLSTACK AC";
+	}
    @GetMapping("/viewall")
    public List<Ac> viewallacs()
    {
