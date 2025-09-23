@@ -1,85 +1,127 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../config";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./main.css";
+import ViewAllAcs from './ViewAllAcs';
 
 export default function ViewAllAcs() {
   const [acs, setAcs] = useState([]);
+  const [selectedId, setSelectedId] = useState("");
+  const [formData, setFormData] = useState({ brand: "", serialNo: "", model: "" });
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const fetchAcs = async () => {
+  // Fetch all ACs
+  const fetchAll = async () => {
     try {
-      const response = await axios.get(`${config.url}/viewall`);
-      setAcs(response.data);
-      setError("");
+      const res = await axios.get(`${config.url}/viewall`);
+      setAcs(res.data);
     } catch (err) {
-      setError("Failed to fetch AC data: " + err.message);
+      setError("Failed to fetch ACs");
     }
   };
 
   useEffect(() => {
-    fetchAcs();
+    fetchAll();
   }, []);
 
-  const deleteAc = async (aid) => {
+  // Handle input change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  // View AC by ID
+  const handleViewById = async () => {
+    if (!selectedId) return;
     try {
-      const response = await axios.delete(`${config.url}/delete/${aid}`);
-      toast.success(response.data);
-      fetchAcs();
+      const res = await axios.get(`${config.url}/view/${selectedId}`);
+      setFormData(res.data);
+      setMessage("");
+      setError("");
     } catch (err) {
-      setError(err.response ? "Failed to delete AC: " + err.response.data : "Deletion failed");
-      toast.error("Deletion failed");
+      setError("AC not found");
+      setMessage("");
+    }
+  };
+
+  // Update AC
+  const handleUpdate = async () => {
+    if (!selectedId) return;
+    try {
+      const res = await axios.put(`${config.url}/update/${selectedId}`, formData);
+      setMessage(res.data);
+      setError("");
+      fetchAll();
+    } catch (err) {
+      setError("Update failed");
+      setMessage("");
+    }
+  };
+
+  // Delete AC
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`${config.url}/delete/${id}`);
+      setMessage(res.data);
+      fetchAll();
+    } catch (err) {
+      setError("Deletion failed");
+      setMessage("");
     }
   };
 
   return (
-    <div className="container">
-      <h3 className="title">View All ACs</h3>
+    <div style={{ padding: "20px" }}>
+      <h2>Manage ACs</h2>
 
-      <ToastContainer position="top-center" autoClose={4000} />
+      {/* View / Update by ID */}
+      <div>
+        <input
+          type="number"
+          placeholder="Enter AC ID"
+          value={selectedId}
+          onChange={(e) => setSelectedId(e.target.value)}
+        />
+        <button onClick={handleViewById}>View by ID</button>
+      </div>
 
-      {error ? (
-        <p className="error-message">{error}</p>
-      ) : acs.length === 0 ? (
-        <p className="error-message">No AC Data Found</p>
-      ) : (
-        <table className="ac-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Brand</th>
-              <th>Serial Number</th>
-              <th>Price</th>
-              <th>Color</th>
-              <th>Action</th>
+      {message && <p style={{ color: "green" }}>{message}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <div>
+        <label>Brand:</label>
+        <input id="brand" value={formData.brand} onChange={handleChange} />
+        <label>Serial No:</label>
+        <input id="serialNo" value={formData.serialNo} onChange={handleChange} />
+        <label>Model:</label>
+        <input id="model" value={formData.model} onChange={handleChange} />
+        <button onClick={handleUpdate}>Update</button>
+      </div>
+
+      <h3>All ACs</h3>
+      <table border="1" cellPadding="5">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Brand</th>
+            <th>Serial No</th>
+            <th>Model</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {acs.map((ac) => (
+            <tr key={ac.id}>
+              <td>{ac.id}</td>
+              <td>{ac.brand}</td>
+              <td>{ac.serialNo}</td>
+              <td>{ac.model}</td>
+              <td>
+                <button onClick={() => handleDelete(ac.id)}>Delete</button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {acs.map((ac) => (
-              <tr key={ac.id}>
-                <td>{ac.id}</td>
-                <td>{ac.brand}</td>
-                <td>{ac.serialNumber}</td>
-                <td>{ac.price}</td>
-                <td>{ac.color}</td>
-                <td>
-                  <Button
-                    variant="outlined"
-                    startIcon={<DeleteIcon />}
-                    onClick={() => deleteAc(ac.id)}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
