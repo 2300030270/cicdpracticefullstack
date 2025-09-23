@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../config";
-import ViewAllAcs from './ViewAllAcs';
+
 
 export default function ViewAllAcs() {
   const [acs, setAcs] = useState([]);
