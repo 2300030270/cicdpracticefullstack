@@ -1,0 +1,65 @@
+package com.myproject.cicd.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.myproject.cicd.model.Ac;
+import com.myproject.cicd.repository.AcRepository;
+
+@Service
+public class AcServiceImpl implements AcService {
+
+    @Autowired
+    private AcRepository repository;
+
+    // Add new AC
+    @Override
+    public String addAc(Ac ac) {
+        repository.save(ac);
+        return "AC added successfully";
+    }
+
+    // Update existing AC
+    @Override
+    public String updateAc(Ac ac) {
+        Optional<Ac> object = repository.findById(ac.getId());
+        if (object.isPresent()) {
+            Ac existing = object.get();
+            existing.setBrand(ac.getBrand());
+            existing.setSerialNumber(ac.getSerialNumber());
+            existing.setPrice(ac.getPrice());
+            existing.setColor(ac.getColor());
+            repository.save(existing);
+            return "AC updated successfully";
+        } else {
+            return "AC ID not found to update";
+        }
+    }
+
+    // Delete AC by ID
+    @Override
+    public String deleteAc(int aid) {
+        Optional<Ac> object = repository.findById(aid);
+        if (object.isPresent()) {
+            repository.delete(object.get());
+            return "AC deleted successfully";
+        } else {
+            return "AC ID not found to delete";
+        }
+    }
+
+    // View all ACs
+    @Override
+    public List<Ac> viewAllAcs() {
+        return repository.findAll();
+    }
+
+    // View AC by ID
+    @Override
+    public Ac viewAcById(int aid) {
+        return repository.findById(aid).orElse(null);
+    }
+}

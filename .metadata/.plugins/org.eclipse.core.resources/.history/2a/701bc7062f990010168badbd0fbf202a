@@ -1,0 +1,52 @@
+package com.myproject.cicd.controller;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+
+import com.myproject.cicd.model.Ac;
+import com.myproject.cicd.service.AcService;
+
+@RestController
+@CrossOrigin("*")
+public class AcController {
+
+    @Autowired
+    private AcService service;
+
+    @GetMapping("/")
+    public String home() {
+        return "AC Demo Running...";
+    }
+
+    @GetMapping("/viewall")
+    public List<Ac> viewAllAcs() {
+        return service.viewAllAcs();
+    }
+
+    @PostMapping("/add")
+    public String addAc(@RequestBody Ac ac) {
+        return service.addAc(ac);
+    }
+
+    @PutMapping("/update")
+    public String updateAc(@RequestBody Ac ac) {
+        return service.updateAc(ac);
+    }
+
+    @DeleteMapping("/delete/{aid}")
+    public String deleteAc(@PathVariable int aid) {
+        return service.deleteAc(aid);
+    }
+
+    @GetMapping("/display")
+    public ResponseEntity<?> displayAcById(@RequestParam int aid) {
+        Ac ac = service.viewAcById(aid);
+        if (ac != null) {
+            return ResponseEntity.ok(ac);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("AC ID not found");
+        }
+    }
+}
