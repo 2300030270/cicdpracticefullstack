@@ -1,0 +1,45 @@
+package com.myproject.springbootacapi.controller;
+
+import com.myproject.springbootacapi.entity.Ac;
+import com.myproject.springbootacapi.repository.AcRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:5173") // Vite dev server port
+public class AcController {
+
+    @Autowired
+    private AcRepository acRepository;
+
+    // Add AC
+    @PostMapping("/add")
+    public ResponseEntity<String> addAc(@RequestBody Ac ac) {
+        if (acRepository.existsById(ac.getId())) {
+            return ResponseEntity.badRequest().body("AC with this ID already exists.");
+        }
+        acRepository.save(ac);
+        return ResponseEntity.ok("AC added successfully");
+    }
+
+    // View All ACs
+    @GetMapping("/viewall")
+    public ResponseEntity<List<Ac>> viewAllAcs() {
+        List<Ac> acs = acRepository.findAll();
+        return ResponseEntity.ok(acs);
+    }
+
+    // Delete AC
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteAc(@PathVariable Long id) {
+        if (!acRepository.existsById(id)) {
+            return ResponseEntity.badRequest().body("AC not found.");
+        }
+        acRepository.deleteById(id);
+        return ResponseEntity.ok("AC deleted successfully");
+    }
+}

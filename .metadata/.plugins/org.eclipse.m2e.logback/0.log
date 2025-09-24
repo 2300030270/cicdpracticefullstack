@@ -1,1 +1,9 @@
 2025-09-02 21:51:59,849 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-09-23 19:13:24,961 [Worker-8: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2025-09-23 19:14:04,940 [Worker-2: Importing Maven projects] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: com.myproject.cicd:CICDBACKENDPRACTICE:0.0.1-SNAPSHOT @ D:\FSAD\CICD Practice\BACKEND\CICDBACKENDPRACTICE\pom.xml.
+2025-09-23 19:14:12,159 [Worker-2: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CICDBACKENDPRACTICE/src/main/java
+2025-09-23 19:14:12,173 [Worker-2: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CICDBACKENDPRACTICE/src/main/resources
+2025-09-23 19:14:12,176 [Worker-2: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CICDBACKENDPRACTICE/src/main/resources
+2025-09-23 19:14:12,181 [Worker-2: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /CICDBACKENDPRACTICE/src/test/java
+2025-09-23 19:14:12,184 [Worker-2: Importing Maven projects] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding resource folder /CICDBACKENDPRACTICE/src/test/resources
+2025-09-23 19:14:17,578 [Worker-2: Importing Maven projects] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Imported and configured 1 project(s) in 19 sec

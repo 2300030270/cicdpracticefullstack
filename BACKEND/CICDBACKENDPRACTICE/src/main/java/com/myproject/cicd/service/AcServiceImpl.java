@@ -10,40 +10,49 @@ import com.myproject.cicd.model.Ac;
 import com.myproject.cicd.repository.AcRepository;
 
 @Service
-public class AcServiceImpl implements AcService
-{
+public class AcServiceImpl implements AcService {
 
-	@Autowired
-   private AcRepository repository;
-   
-	@Override
-	public String addac(Ac a) 
-	{
-		repository.save(a);
-		return "Ac added successfully";
-	}
+    @Autowired
+    private AcRepository repo;
 
-	@Override
-	public String deleteac(int aid)
-	{
-	Optional<Ac> object = repository.findById(aid);
-	String msg = null;
-		if(object.isPresent())
-		{
-			Ac ac = object.get();
-			repository.delete(ac);
-			msg = "Ac Deleted Successfully";
-		}
-		else
-		{
-			msg = "Ac Id Not Found To Delete";
-		}
-		return msg;
-	}
+    @Override
+    public String addac(Ac a) {
+        repo.save(a);
+        return "AC details added successfully!";
+    }
 
-	@Override
-	public List<Ac> viewallacs() 
-	{
-				return repository.findAll();
-	}
+    @Override
+    public String deleteac(int aid) {
+        if (repo.existsById(aid)) {
+            repo.deleteById(aid);
+            return "AC with ID " + aid + " deleted successfully!";
+        } else {
+            return "AC with ID " + aid + " not found!";
+        }
+    }
+
+    @Override
+    public List<Ac> viewallacs() {
+        return repo.findAll();
+    }
+
+    @Override
+    public Ac viewbyid(int id) {
+        Optional<Ac> ac = repo.findById(id);
+        return ac.orElse(null); // return null if not found
+    }
+
+    @Override
+    public String updateac(int id, Ac a) {
+        if (repo.existsById(id)) {
+            Ac existing = repo.findById(id).get();
+            existing.setBrand(a.getBrand());
+            existing.setSerialNo(a.getSerialNo());
+            existing.setModel(a.getModel());
+            repo.save(existing);
+            return "AC with ID " + id + " updated successfully!";
+        } else {
+            return "AC with ID " + id + " not found!";
+        }
+    }
 }

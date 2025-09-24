@@ -1,0 +1,48 @@
+package com.myproject.cicd.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.myproject.cicd.model.Ac;
+import com.myproject.cicd.service.AcService;
+
+@RestController
+@CrossOrigin("*")
+@RequestMapping("/ac")
+public class AcController {
+
+    @Autowired
+    private AcService service;
+
+    @GetMapping("/")
+    public String home() {
+        return "CI/CD FULLSTACK AC";
+    }
+
+    @PostMapping("/add")
+    public Ac addAc(@RequestBody Ac ac) {
+        return service.addAc(ac);
+    }
+
+    @GetMapping("/viewall")
+    public List<Ac> getAllAcs() {
+        return service.getAllAcs();
+    }
+
+    @GetMapping("/view/{id}")
+    public Ac getAcById(@PathVariable int id) {
+        return service.getAcById(id);
+    }
+
+    @PutMapping("/update")
+    public Ac updateAc(@RequestBody Ac ac) {
+        return service.updateAc(ac);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteAcById(@PathVariable int id) {
+        service.deleteAcById(id);
+    }
+}

@@ -1,73 +1,45 @@
 package com.myproject.cicd.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name= "ac_table")
-public class Ac 
-{
-	@Id
-	@Column(name="aid")
-	private int id;
+@Table(name = "ac_table")
+public class Ac {
 
-      @Column(name = "ac_brand", length = 50, nullable = false)
-      private String brand;
-      
-      @Column(name = "ac_serial_no", length = 50, nullable = false, unique = true)
-      private String serialNumber;
-      
-      @Column(name = "ac_price", nullable = false)
-      private double price;
-      
-      @Column(name = "ac_color", length = 20, nullable = true)
-      private String color;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "aid")
+    private int id;
 
-	public int getId() {
-		return id;
-	}
+    @Column(name = "ac_brand", length = 50, nullable = false)
+    private String brand;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Column(name = "ac_serial_no", length = 50, nullable = false, unique = true)
+    private String serialNo;
 
-	public String getBrand() {
-		return brand;
-	}
+    @Column(name = "ac_model", length = 50, nullable = false)
+    private String model;
 
-	public void setBrand(String brand) {
-		this.brand = brand;
-	}
+    // Constructors
+    public Ac() {}
 
-	public String getSerialNumber() {
-		return serialNumber;
-	}
+    public Ac(int id, String brand, String serialNo, String model) {
+        this.id = id;
+        this.brand = brand;
+        this.serialNo = serialNo;
+        this.model = model;
+    }
 
-	public void setSerialNumber(String serialNumber) {
-		this.serialNumber = serialNumber;
-	}
+    // Getters and Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-	public double getPrice() {
-		return price;
-	}
+    public String getBrand() { return brand; }
+    public void setBrand(String brand) { this.brand = brand; }
 
-	public void setPrice(double price) {
-		this.price = price;
-	}
+    public String getSerialNo() { return serialNo; }
+    public void setSerialNo(String serialNo) { this.serialNo = serialNo; }
 
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
-	@Override
-	public String toString() {
-		return "Ac [id=" + id + ", brand=" + brand + ", serialNumber=" + serialNumber + ", price=" + price + ", color="
-				+ color + "]";
-	}
+    public String getModel() { return model; }
+    public void setModel(String model) { this.model = model; }
 }
