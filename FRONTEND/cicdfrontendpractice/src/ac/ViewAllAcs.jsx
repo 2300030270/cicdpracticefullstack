@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../config";
 
-
 export default function ViewAllAcs() {
   const [acs, setAcs] = useState([]);
   const [selectedId, setSelectedId] = useState("");
-  const [formData, setFormData] = useState({ brand: "", serialNo: "", model: "" });
+  const [formData, setFormData] = useState({ brand: "", serialNumber: "", price: "", color: "" });
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
@@ -16,7 +15,7 @@ export default function ViewAllAcs() {
       const res = await axios.get(`${config.url}/viewall`);
       setAcs(res.data);
     } catch (err) {
-      setError("Failed to fetch ACs");
+      setError(err.response?.data?.message || JSON.stringify(err.response?.data) || err.message || "Failed to fetch ACs");
     }
   };
 
@@ -24,12 +23,10 @@ export default function ViewAllAcs() {
     fetchAll();
   }, []);
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  // View AC by ID
   const handleViewById = async () => {
     if (!selectedId) return;
     try {
@@ -38,12 +35,11 @@ export default function ViewAllAcs() {
       setMessage("");
       setError("");
     } catch (err) {
-      setError("AC not found");
+      setError(err.response?.data?.message || JSON.stringify(err.response?.data) || "AC not found");
       setMessage("");
     }
   };
 
-  // Update AC
   const handleUpdate = async () => {
     if (!selectedId) return;
     try {
@@ -52,19 +48,19 @@ export default function ViewAllAcs() {
       setError("");
       fetchAll();
     } catch (err) {
-      setError("Update failed");
+      setError(err.response?.data?.message || JSON.stringify(err.response?.data) || "Update failed");
       setMessage("");
     }
   };
 
-  // Delete AC
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`${config.url}/delete/${id}`);
       setMessage(res.data);
+      setError("");
       fetchAll();
     } catch (err) {
-      setError("Deletion failed");
+      setError(err.response?.data?.message || JSON.stringify(err.response?.data) || "Deletion failed");
       setMessage("");
     }
   };
@@ -73,7 +69,6 @@ export default function ViewAllAcs() {
     <div style={{ padding: "20px" }}>
       <h2>Manage ACs</h2>
 
-      {/* View / Update by ID */}
       <div>
         <input
           type="number"
@@ -84,16 +79,18 @@ export default function ViewAllAcs() {
         <button onClick={handleViewById}>View by ID</button>
       </div>
 
-      {message && <p style={{ color: "green" }}>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {message && <p style={{ color: "green" }}>{typeof message === 'string' ? message : JSON.stringify(message)}</p>}
+      {error && <p style={{ color: "red" }}>{typeof error === 'string' ? error : JSON.stringify(error)}</p>}
 
       <div>
         <label>Brand:</label>
         <input id="brand" value={formData.brand} onChange={handleChange} />
-        <label>Serial No:</label>
-        <input id="serialNo" value={formData.serialNo} onChange={handleChange} />
-        <label>Model:</label>
-        <input id="model" value={formData.model} onChange={handleChange} />
+        <label>Serial Number:</label>
+        <input id="serialNumber" value={formData.serialNumber} onChange={handleChange} />
+        <label>Price:</label>
+        <input id="price" type="number" step="0.01" value={formData.price} onChange={handleChange} />
+        <label>Color:</label>
+        <input id="color" value={formData.color} onChange={handleChange} />
         <button onClick={handleUpdate}>Update</button>
       </div>
 
@@ -103,8 +100,9 @@ export default function ViewAllAcs() {
           <tr>
             <th>ID</th>
             <th>Brand</th>
-            <th>Serial No</th>
-            <th>Model</th>
+            <th>Serial Number</th>
+            <th>Price</th>
+            <th>Color</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -113,8 +111,9 @@ export default function ViewAllAcs() {
             <tr key={ac.id}>
               <td>{ac.id}</td>
               <td>{ac.brand}</td>
-              <td>{ac.serialNo}</td>
-              <td>{ac.model}</td>
+              <td>{ac.serialNumber}</td>
+              <td>{ac.price}</td>
+              <td>{ac.color}</td>
               <td>
                 <button onClick={() => handleDelete(ac.id)}>Delete</button>
               </td>

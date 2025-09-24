@@ -39,16 +39,18 @@ public class AcServiceImpl implements AcService {
     @Override
     public Ac viewbyid(int id) {
         Optional<Ac> ac = repo.findById(id);
-        return ac.orElse(null); // return null if not found
+        return ac.orElse(null);
     }
 
     @Override
     public String updateac(int id, Ac a) {
-        if (repo.existsById(id)) {
-            Ac existing = repo.findById(id).get();
+        Optional<Ac> optionalAc = repo.findById(id);
+        if (optionalAc.isPresent()) {
+            Ac existing = optionalAc.get();
             existing.setBrand(a.getBrand());
-            existing.setSerialNo(a.getSerialNo());
-            existing.setModel(a.getModel());
+            existing.setSerialNumber(a.getSerialNumber());
+            existing.setPrice(a.getPrice());
+            existing.setColor(a.getColor());
             repo.save(existing);
             return "AC with ID " + id + " updated successfully!";
         } else {

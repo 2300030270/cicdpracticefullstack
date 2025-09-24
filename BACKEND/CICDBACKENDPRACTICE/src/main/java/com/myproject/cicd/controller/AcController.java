@@ -10,7 +10,7 @@ import com.myproject.cicd.model.Ac;
 import com.myproject.cicd.service.AcService;
 
 @RestController
-@CrossOrigin("*") // allows CORS for frontend
+@CrossOrigin("*")
 public class AcController {
 
     @Autowired

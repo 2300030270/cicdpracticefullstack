@@ -8,28 +8,22 @@ public class Ac {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "aid")
+    @Column(name = "ac_id")
     private int id;
 
     @Column(name = "ac_brand", length = 50, nullable = false)
     private String brand;
 
-    @Column(name = "ac_serial_no", length = 50, nullable = false, unique = true)
-    private String serialNo;
+    @Column(name = "ac_serial_number", length = 50, nullable = false, unique = true)
+    private String serialNumber;
 
-    @Column(name = "ac_model", length = 50, nullable = false)
-    private String model;
+    @Column(name = "ac_price", nullable = false)
+    private double price;
 
-    // Constructors
-    public Ac() {}
+    @Column(name = "ac_color", length = 30, nullable = false)
+    private String color;
 
-    public Ac(int id, String brand, String serialNo, String model) {
-        this.id = id;
-        this.brand = brand;
-        this.serialNo = serialNo;
-        this.model = model;
-    }
-
+   
     // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -37,9 +31,12 @@ public class Ac {
     public String getBrand() { return brand; }
     public void setBrand(String brand) { this.brand = brand; }
 
-    public String getSerialNo() { return serialNo; }
-    public void setSerialNo(String serialNo) { this.serialNo = serialNo; }
+    public String getSerialNumber() { return serialNumber; }
+    public void setSerialNumber(String serialNumber) { this.serialNumber = serialNumber; }
 
-    public String getModel() { return model; }
-    public void setModel(String model) { this.model = model; }
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
 }
