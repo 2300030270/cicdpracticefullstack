@@ -4,7 +4,7 @@ import NavBar from "./ac/NavBar";
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <BrowserRouter basename="/reactacapi">
         <NavBar />
       </BrowserRouter>
     </div>
