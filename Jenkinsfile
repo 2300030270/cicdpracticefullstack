@@ -1,5 +1,3 @@
-// which sir gave this is that jenkins file 
-
 pipeline {
     agent any
 
@@ -8,7 +6,7 @@ pipeline {
         // ===== FRONTEND BUILD =====
         stage('Build Frontend') {
             steps {
-                dir('FRONTEND/cicdfrontendpractice') {
+                dir('AC-JENKINS') {
                     bat 'npm install'
                     bat 'npm run build'
                 }
@@ -23,8 +21,7 @@ pipeline {
                     rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactacapi"
                 )
                 mkdir "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactacapi"
-
-                xcopy /E /I /Y "FRONTEND\\cicdfrontendpractice\\dist\\*" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactacapi"
+                xcopy /E /I /Y AC-JENKINS\\dist\\* "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactacapi"
                 '''
             }
         }
@@ -32,7 +29,7 @@ pipeline {
         // ===== BACKEND BUILD =====
         stage('Build Backend') {
             steps {
-                dir('BACKEND/CICDBACKENDPRACTICE') {
+                dir('CICDBACKENDPRACTICE') {
                     bat 'mvn clean package'
                 }
             }
@@ -48,10 +45,11 @@ pipeline {
                 if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootacapi" (
                     rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootacapi"
                 )
-                copy /Y "BACKEND\\CICDBACKENDPRACTICE\\target\\*.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\"
+                copy "CICDBACKENDPRACTICE\\target\\*.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\"
                 '''
             }
         }
+
     }
 
     post {
