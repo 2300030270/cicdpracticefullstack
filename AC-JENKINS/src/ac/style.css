@@ -1,43 +1,38 @@
-/* General layout */
+/* ===== Global Layout ===== */
 body {
   font-family: Arial, sans-serif;
-  background-color: #ffffff; /* changed background color */
+  background-color: #f8fafa; /* softer background */
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* vertical stacking */
   align-items: center;
   min-height: 100vh;
-  flex-direction: column; /* stack navbar, form, table vertically */
 }
 
-/* Headings */
-h2, h3 {
-  color: #006064; /* darker accent color */
+/* ===== Headings ===== */
+h2, h3, h4 {
+  color: #006064;
   text-align: center;
+  margin: 10px 0;
 }
 
-/* Div spacing */
-div {
-  margin-bottom: 10px;
-}
-
-/* Navbar */
+/* ===== Navbar ===== */
 .navbar {
-  background-color: #004d40; /* changed navbar color */
-  padding: 10px 20px;
+  background-color: #004d40;
+  padding: 12px 20px;
   width: 100%;
   text-align: center;
-  border-radius: 6px;
+  border-radius: 0 0 8px 8px;
   margin-bottom: 20px;
 }
 
 .nav-links {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  list-style: none;
   display: flex;
-  justify-content: center; /* center links */
+  justify-content: center;
+  padding: 0;
+  margin: 0;
 }
 
 .nav-links li {
@@ -46,45 +41,137 @@ div {
 
 .nav-links li a {
   text-decoration: none;
-  color: #e0f7fa; /* changed link color */
+  color: #e0f7fa;
   font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .nav-links li a:hover {
-  color: #eceded; /* hover color */
+  color: #ffffff;
 }
 
-/* Buttons */
+/* ===== Form Layout ===== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin: 15px 0;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select {
+  padding: 8px;
+  border: 1px solid #00796b;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== Buttons ===== */
 button {
-  padding: 6px 12px;
-  margin-top: 5px;
-  background-color: #00796b; /* changed button color */
+  padding: 8px 16px;
+  margin: 5px;
+  background-color: #00796b;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #004d40; /* hover color */
+  background-color: #004d40;
 }
 
-/* Inputs */
-input[type="text"],
-input[type="number"] {
-  padding: 5px;
-  margin: 5px 0;
-  border: 1px solid #00796b; /* input border color */
-  border-radius: 4px;
-  width: 200px;
+.btn-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 
-/* Message styles */
-p {
-  font-size: 14px;
-  margin: 5px 0;
-  color: #004d40;
+.btn-blue {
+  background-color: #0277bd;
+}
+
+.btn-green {
+  background-color: #2e7d32;
+}
+
+.btn-red {
+  background-color: #c62828;
+}
+
+.btn-gray {
+  background-color: #757575;
+}
+
+.btn-blue:hover {
+  background-color: #01579b;
+}
+
+.btn-green:hover {
+  background-color: #1b5e20;
+}
+
+.btn-red:hover {
+  background-color: #8e0000;
+}
+
+.btn-gray:hover {
+  background-color: #424242;
+}
+
+/* ===== Table ===== */
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+table th,
+table td {
+  border: 1px solid #00796b;
+  padding: 8px 12px;
   text-align: center;
 }
 
+table th {
+  background-color: #004d40;
+  color: #fff;
+}
 
+/* ===== Messages ===== */
+.message-banner {
+  margin: 10px 0;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.message-banner.success {
+  background-color: #e6ffed;
+  color: #1b5e20;
+  border: 1px solid #1b5e20;
+}
+
+.message-banner.error {
+  background-color: #ffe6e6;
+  color: #b71c1c;
+  border: 1px solid #b71c1c;
+}
+
+/* ===== Utility ===== */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}

@@ -1,12 +1,10 @@
 import { BrowserRouter } from "react-router-dom";
-import NavBar from "./ac/NavBar";
+import ACManager from "./ac/ACManager";
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <NavBar />
-      </BrowserRouter>
+      <ACManager/>
     </div>
   );
 }
